@@ -93,7 +93,7 @@ function startHeadTracking() {
     //gapi.hangout.av.effects.onFaceTrackingDataChanged.
     //    add(onFaceTrackingChanged);
 
-    //console.log('Started head tracking');    
+    console.log('Started head tracking');    
 }
 
 function init() {
