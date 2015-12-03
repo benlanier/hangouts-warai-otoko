@@ -86,7 +86,7 @@ function startHeadTracking() {
          gapi.hangout.av.effects.FaceTrackingFeature.NOSE_ROOT,
          'scaleWithFace': true,
          'rotateWithFace': false,
-         'scale': 1.0});
+         'scale': 2.2});
     overlay.setVisible(true);
 
     // Add event handler.
