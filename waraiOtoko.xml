@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    	<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+    	<Module>
+    	  <ModulePrefs title="Face Movement" height="200" width="550">
+    	  <Require feature="dynamic-height"/>
+    	  <Require feature="rpc"/>
+          <Require feature="views" />
+    	</ModulePrefs>
+    	<Content type="html"><![CDATA[
+<!DOCTYPE html>
+          
+
+<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+
+<script>
+
+// Keep track of this
+// var canvas = document.getElementById('canvas');
+
+// Keep track of recent events.
+// var lastGoodEvent;
+// var lastEvent;
+
+// Are we mirroring our face render?
+// var mirrored = true;
+
+/** Per-frame render */
+// function drawFrame() {
+//     var context = canvas.getContext('2d');
+// 
+//     // Clear the canvas
+//     context.setTransform(1,0,0,1,0,0);
+//     context.fillStyle = 'rgb(0,0,0)';
+//     context.fillRect(0,0,600,400);
+// 
+//     if (lastGoodEvent) {
+//         drawFace(lastGoodEvent, lastEvent.hasFace);
+//         drawRollPanTilt(lastGoodEvent, lastEvent.hasFace);
+//     }
+// }
+
+/** Animation loop */
+// function animate(){
+//     drawFrame();
+//     // request new frame
+//     requestAnimFrame(function () {
+//         animate();
+//     });
+// }
+
+/** Standard requestAnimFrame from paulirish.com, running 30 fps */
+// window.requestAnimFrame = (function (callback) {
+//     return window.requestAnimationFrame ||
+//     window.webkitRequestAnimationFrame ||
+//     window.mozRequestAnimationFrame ||
+//     window.oRequestAnimationFrame ||
+//     window.msRequestAnimationFrame ||
+//     function(callback){
+//         window.setTimeout(callback, 1000 / 30);
+//     };
+// })();
+
+/** Event handler */
+function onFaceTrackingChanged(event) {
+    try {
+        lastEvent = event;
+        if (event.hasFace) {
+            lastGoodEvent = event;
+        }
+    } catch(e) {
+        console.log("onFaceTrackingChanged: ERROR");
+        console.log(e);
+    }
+}
+
+/** Sets up event handler and shows a topHat
+ * from the Media app to indicate who is the current
+ * face tracked.
+ */
+function startHeadTracking() {
+    // Create hat overlay.
+    var topHat = gapi.hangout.av.effects.createImageResource(
+        'laughing_man_big_2.png');
+    var overlay = topHat.createFaceTrackingOverlay(
+        {'trackingFeature':
+         gapi.hangout.av.effects.FaceTrackingFeature.NOSE_ROOT,
+         'scaleWithFace': true,
+         'rotateWithFace': false,
+         'scale': 1.0});
+    overlay.setVisible(true);
+
+    // Add event handler.
+    //gapi.hangout.av.effects.onFaceTrackingDataChanged.
+    //    add(onFaceTrackingChanged);
+
+    //console.log('Started head tracking');    
+}
+
+function init() {
+  // When API is ready...                                                
+  gapi.hangout.onApiReady.add(
+      function(eventObj) {
+        if (eventObj.isApiReady) {
+            startHeadTracking();
+            // animate();
+        }
+      });
+}
+
+// Wait for gadget to load.                                         
+gadgets.util.registerOnLoadHandler(init);
+</script>
+<br/>
+]]></Content></Module>
