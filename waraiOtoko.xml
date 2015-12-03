@@ -80,7 +80,7 @@ function onFaceTrackingChanged(event) {
 function startHeadTracking() {
     // Create hat overlay.
     var topHat = gapi.hangout.av.effects.createImageResource(
-        'http://i.imgur.com/vIyaaYX.png');
+        'https://i.imgur.com/XQT615E.png');
     var overlay = topHat.createFaceTrackingOverlay(
         {'trackingFeature':
          gapi.hangout.av.effects.FaceTrackingFeature.NOSE_ROOT,
